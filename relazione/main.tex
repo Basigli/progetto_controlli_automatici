@@ -1,0 +1,84 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\title{Progetto Controlli Automatici}
+\author{SuS}
+\date{Dicembre 2022}
+
+\begin{document}
+
+\maketitle
+
+\section{Sistema in forma di stato}
+Al fine di esprimere il sistema in forma di stato, andiamo ad individuare lo stato $x$, l'ingresso $u$ e l'uscita $y$ del sistema
+$$
+x := \left[\begin{matrix} x_1\\ x_2\end{matrix}\right] := \left[\begin{matrix} \theta \\ \omega\end{matrix}\right], \ \ u:= \tau, \ \ y:= \omega
+$$
+
+Coerentemente con questa scelta, ricaviamo dal sistema la seguente espressione per le funzioni $f$ e $h$
+$$
+f(x,u) = \left[\begin{matrix} f_1(x,u)\\ f_2(x,u)\end{matrix}\right] = \left[\begin{matrix} x_2 \\ \frac{-\beta x_2-g m_i e_i sin(x_1)+ u}{m_i e_i^2 + I_e} \end{matrix}\right] 
+$$
+$$
+h(x,u) = x_2
+$$
+Una volta calcolate $f$ e $h$ scriviamo il sistema nella seguente forma di stato
+$$
+\left[\begin{matrix} \dot x_1\\ \dot x_2\end{matrix}\right] = 
+\left[\begin{matrix} x_2 \\ \frac{-\beta x_2-g m_i e_i sin(x_1)+ u}{m_i e_i^2 + I_e} \end{matrix}\right] 
+$$
+$$
+y = x_2
+$$
+Troviamo ora la coppia di equilibrio ponendo a 0 il primo membro e, dunque, ottenendo
+$$
+\left[\begin{matrix} 0\\ 0\end{matrix}\right] = 
+\left[\begin{matrix} x_2 \\ \frac{-\beta x_2-g m_i e_i sin(x_1)+ u}{m_i e_i^2 + I_e} \end{matrix}\right] 
+$$
+Risolvendo il sistema di equazioni otteniamo
+$$
+x_e := \left[\begin{matrix} x_{1e}\\ x_{2e}\end{matrix}\right] :=
+\left[\begin{matrix} \theta_e \\ 0\end{matrix}\right], 
+u_e= \frac{g m_i e_i}{2}
+$$
+\section{Linearizzazione e funzione di trasferimento del sistema}
+Definiamo le variabili alle variazioni $\delta x, \delta u $  e $\delta y $ come 
+$$
+\delta x = x - x_e
+$$
+$$
+\delta u = u - u_e 
+$$
+$$
+\delta y = y - y_e
+$$
+L'evoluzione del sistema espressa nelle variabili alle variazioni può essere approssimativamente descritta mediante il seguente sistema lineare
+$$
+\delta \dot x = A \delta x + B \delta u
+$$
+$$
+\delta y = C \delta x + D \delta u
+$$
+dove le matrici A, B, C e D sono
+
+$$
+A = \left[\begin{matrix} \frac{\partial f_1(x,u)}{\partial x_1} & \frac{\partial f_1(x,u)}{\partial x_2} \\ \frac{\partial f_2(x,u)}{\partial x_1} & \frac{\partial f_2(x,u)}{\partial x_2}\end{matrix}\right]_{x=x_e,  u=u_e}
+= \left[\begin{matrix} 0 & 1 \\ \frac{-g m_i e_i cos(x_1)}{m_i e_i^2 + I_e} & \frac{\beta}{m_i e_i^2 + I_e} \end{matrix}\right]_{x_1=\frac{\pi}{6}, x_2=0,  u=u_e}
+$$
+$$
+= \left[\begin{matrix} 0 & 1 \\ \frac{-g m_i e_i \sqrt{3}}{2(m_i e_i^2 + I_e)} & \frac{\beta}{m_i e_i^2 + I_e} \end{matrix}\right]
+$$
+$$
+B = \left[\begin{matrix} \frac{\partial f_1(x,u)}{\partial u}\\ \frac{\partial f_2(x,u)}{\partial u} \end{matrix}\right]_{x=x_e, u=u_e}
+= \left[\begin{matrix} 0 \\ \frac{1}{m_i e_i^2 + I_e} \end{matrix}\right]
+$$
+$$
+C = \left[\begin{matrix} \frac{\partial h(x,u)}{\partial x_1} & \frac{\partial h(x,u)}{\partial x_2} \end{matrix}\right]_{x=x_e, u=u_e}
+=\left[\begin{matrix} 0 & 1 \end{matrix}\right]
+$$
+$$
+D = \left[\begin{matrix} \frac{\partial h(x,u)}{\partial u} \end{matrix}\right]_{x=x_e, u=u_e}
+= 0
+$$
+
+\end{document}
